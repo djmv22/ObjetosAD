@@ -6,6 +6,7 @@
 
 package interfaz;
 import clases.Persona;
+import javax.swing.JOptionPane;
 /**
  *
  * @author rmorales1
@@ -130,7 +131,11 @@ public class Principal extends javax.swing.JFrame {
         p = new Persona(identificacion, primer_nombre, primer_apellido);
         v[cont]=p;
         cont ++;
-        
+        JOptionPane.showInternalMessageDialog(this, "Persona agrega existosamente");
+        txtIdentificacion.setText("");
+        txtPrimerNombre.setText("");
+        txtPrimerApellido.setText("");
+        txtIdentificacion.requestFocusInWindow();
         
         
     }//GEN-LAST:event_cmdGuardarActionPerformed

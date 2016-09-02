@@ -6,6 +6,7 @@
 
 package interfaz;
 import clases.Persona;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 /**
  *
@@ -16,8 +17,7 @@ public class Principal extends javax.swing.JFrame {
     /**
      * Creates new form Principal
      */
-    Persona v[] = new Persona[5];
-    int cont= 0;
+    ArrayList<Persona> v = new ArrayList();
     public Principal() {
         initComponents();
     }
@@ -52,7 +52,7 @@ public class Principal extends javax.swing.JFrame {
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Tw Cen MT Condensed Extra Bold", 1, 18)); // NOI18N
         jLabel1.setText("AGREGAR PERSONAS");
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 10, -1, -1));
 
@@ -71,7 +71,7 @@ public class Principal extends javax.swing.JFrame {
         jPanel2.add(txtPrimerNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 50, 90, -1));
         jPanel2.add(txtPrimerApellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 80, 90, -1));
 
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 230, 110));
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 240, 120));
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Opciones"));
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -82,15 +82,25 @@ public class Principal extends javax.swing.JFrame {
                 cmdGuardarActionPerformed(evt);
             }
         });
-        jPanel3.add(cmdGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, -1, -1));
+        jPanel3.add(cmdGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 20, -1, -1));
 
         cmdMostrar.setText("Mostrar");
-        jPanel3.add(cmdMostrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 50, -1, -1));
+        cmdMostrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmdMostrarActionPerformed(evt);
+            }
+        });
+        jPanel3.add(cmdMostrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 50, -1, -1));
 
         cmdLimpiar.setText("Limpiar");
-        jPanel3.add(cmdLimpiar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 80, 70, -1));
+        cmdLimpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmdLimpiarActionPerformed(evt);
+            }
+        });
+        jPanel3.add(cmdLimpiar, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 80, 70, -1));
 
-        jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 40, 110, 110));
+        jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 40, 150, 120));
 
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Resultado"));
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -102,20 +112,20 @@ public class Principal extends javax.swing.JFrame {
 
         jPanel4.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 330, -1));
 
-        jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 150, 350, 130));
+        jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 170, 350, 130));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 414, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 449, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 319, Short.MAX_VALUE)
         );
 
-        setSize(new java.awt.Dimension(430, 339));
+        setSize(new java.awt.Dimension(465, 358));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -129,9 +139,8 @@ public class Principal extends javax.swing.JFrame {
         primer_apellido = txtPrimerApellido.getText();
         
         p = new Persona(identificacion, primer_nombre, primer_apellido);
-        v[cont]=p;
-        cont ++;
-        JOptionPane.showInternalMessageDialog(this, "Persona agrega existosamente");
+        v.add(p);
+        JOptionPane.showMessageDialog(this, "Persona agrega existosamente");
         txtIdentificacion.setText("");
         txtPrimerNombre.setText("");
         txtPrimerApellido.setText("");
@@ -139,6 +148,36 @@ public class Principal extends javax.swing.JFrame {
         
         
     }//GEN-LAST:event_cmdGuardarActionPerformed
+
+    private void cmdMostrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdMostrarActionPerformed
+        String aux;
+        txtResultado.setText("");
+        if(v.isEmpty()){
+            txtResultado.setText("No hay personas que mostrar");
+        }else{
+        for (int i = 0; i < v.size(); i++) {
+            aux = "Persona No° "+(i+1)+"\n"
+                  + "Identificacion: " + v.get(i).getIdentificacion() + "\n"
+                  + "Primer Nombre: " + v.get(i).getPrimer_nombre() + "\n"
+                  + "Primer Apellido: " + v.get(i).getPrimer_apellido() + "\n\n";
+            txtResultado.append(aux);
+        }
+        }
+    }//GEN-LAST:event_cmdMostrarActionPerformed
+
+    private void cmdLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdLimpiarActionPerformed
+        int op;
+        op = JOptionPane.showConfirmDialog(this, "¿Seguro que desea eliminar las personas?", "Pregunta", JOptionPane.YES_NO_OPTION);
+        if(op == JOptionPane.YES_OPTION){
+            v.clear();
+            txtResultado.setText("");
+            txtIdentificacion.setText("");
+            txtPrimerNombre.setText("");
+            txtPrimerApellido.setText("");
+            txtIdentificacion.requestFocusInWindow();
+            
+        }
+    }//GEN-LAST:event_cmdLimpiarActionPerformed
 
     /**
      * @param args the command line arguments
